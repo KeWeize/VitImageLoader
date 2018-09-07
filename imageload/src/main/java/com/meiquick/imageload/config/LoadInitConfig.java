@@ -3,38 +3,58 @@ package com.meiquick.imageload.config;
 import android.support.annotation.NonNull;
 
 /**
- * <p> 缓存配置类 <p/>
+ * <p> 图片加载初始化配置类 <p/>
  *
  * @author kewz
  */
 
 public class LoadInitConfig {
 
+    private static final String DEFAULT_DISK_CACHE_NAME = "imageCacheDir";
+
+    private static final int DEFAULT_DISK_CACHE_SIZE = 256 * 1024 * 1024;
+
     /**
      * 图片加载渠道
      */
-    private int chancel;
+    private int chancel = ChannelContants._LOADER_CHANNEL_GLIDE;
 
     /**
      * 缓存目录名
      */
-    private String diskCacheName;
+    private String diskCacheName = DEFAULT_DISK_CACHE_NAME;
 
     /**
      * 磁盘缓存大小
      */
-    private int diskCacheSize;
+    private int diskCacheSize = DEFAULT_DISK_CACHE_SIZE;
 
     /**
      * 是否缓存至外部磁盘
      */
-    private boolean isExternalCacheDiskCache;
+    private boolean isExternalCacheDiskCache = false;
 
     private LoadInitConfig(Builder builder) {
         this.chancel = builder.chancel;
         this.diskCacheName = builder.diskCacheName;
         this.diskCacheSize = builder.diskCacheSize;
         this.isExternalCacheDiskCache = builder.isExternalCacheDiskCache;
+    }
+
+    public int getChancel() {
+        return chancel;
+    }
+
+    public String getDiskCacheName() {
+        return diskCacheName;
+    }
+
+    public int getDiskCacheSize() {
+        return diskCacheSize;
+    }
+
+    public boolean isExternalCacheDiskCache() {
+        return isExternalCacheDiskCache;
     }
 
     public static class Builder {

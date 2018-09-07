@@ -3,6 +3,7 @@ package com.meiquick.imageload.loader;
 import android.content.Context;
 
 import com.meiquick.imageload.config.ImageConfig;
+import com.meiquick.imageload.config.LoadInitConfig;
 
 /**
  * <p> 定义加载器 <p/>
@@ -12,7 +13,7 @@ import com.meiquick.imageload.config.ImageConfig;
 
 public interface ILoader {
 
-    void init(Context context, int chacheSizeInMm);
+    void init(Context context, LoadInitConfig loadInitConfig);
 
     /**
      * 请求加载

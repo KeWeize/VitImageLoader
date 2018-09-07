@@ -15,6 +15,9 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.EncodeStrategy;
 import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.cache.ExternalCacheDiskCacheFactory;
+import com.bumptech.glide.load.engine.cache.ExternalPreferredCacheDiskCacheFactory;
+import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
@@ -22,6 +25,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.meiquick.imageload.R;
 import com.meiquick.imageload.config.ImageConfig;
 import com.meiquick.imageload.config.CropMode;
+import com.meiquick.imageload.config.LoadInitConfig;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
@@ -37,21 +41,16 @@ public class GlideLoader implements ILoader {
     private static String TAG = GlideLoader.class.getSimpleName();
 
     @Override
-    public void init(Context context, int chacheSizeInMm) {
-
+    public void init(Context context, LoadInitConfig loadInitConfig) {
         Glide.get(context).setMemoryCategory(MemoryCategory.NORMAL);
-
-        GlideBuilder glideBuilder = new GlideBuilder();
-
-
-
-        Glide.with(context)
-                .applyDefaultRequestOptions(new RequestOptions().error(R.drawable.m_error));
-
-        RequestOptions defaultOption = new RequestOptions();
-
-
-
+        GlideBuilder builder = new GlideBuilder();
+        if (loadInitConfig.isExternalCacheDiskCache()) {
+            builder.setDiskCache(new ExternalPreferredCacheDiskCacheFactory(context,
+                    loadInitConfig.getDiskCacheName(), loadInitConfig.getDiskCacheSize()));
+        } else {
+            builder.setDiskCache(new InternalCacheDiskCacheFactory(context,
+                    loadInitConfig.getDiskCacheName(), loadInitConfig.getDiskCacheSize()));
+        }
     }
 
     @Override
