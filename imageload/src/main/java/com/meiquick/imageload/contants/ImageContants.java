@@ -1,7 +1,7 @@
-package com.meiquick.imageload.config;
+package com.meiquick.imageload.contants;
 
 /**
- * <p> <p/>
+ * <p> 图片加载常量 <p/>
  *
  * @author kewz
  */

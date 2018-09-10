@@ -1,4 +1,4 @@
-package com.meiquick.imageload.config;
+package com.meiquick.imageload.contants;
 
 /**
  * <p> 加载图片缩放模式  <p/>

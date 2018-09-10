@@ -1,6 +1,9 @@
 package com.meiquick.imageload.config;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+
+import com.meiquick.imageload.contants.ChannelContants;
 
 /**
  * <p> 图片加载初始化配置类 <p/>
@@ -34,11 +37,17 @@ public class LoadInitConfig {
      */
     private boolean isExternalCacheDiskCache = false;
 
+    /**
+     * 全局默认图片加载配置
+     */
+    private ImageConfig defaultImageConfig;
+
     private LoadInitConfig(Builder builder) {
         this.chancel = builder.chancel;
         this.diskCacheName = builder.diskCacheName;
         this.diskCacheSize = builder.diskCacheSize;
         this.isExternalCacheDiskCache = builder.isExternalCacheDiskCache;
+        this.defaultImageConfig = builder.defaultImageConfig;
     }
 
     public int getChancel() {
@@ -55,6 +64,10 @@ public class LoadInitConfig {
 
     public boolean isExternalCacheDiskCache() {
         return isExternalCacheDiskCache;
+    }
+
+    public ImageConfig getDefaultImageConfig() {
+        return defaultImageConfig;
     }
 
     public static class Builder {
@@ -79,6 +92,11 @@ public class LoadInitConfig {
         private boolean isExternalCacheDiskCache;
 
         /**
+         * 全局默认图片加载配置
+         */
+        private ImageConfig defaultImageConfig;
+
+        /**
          * 加载器
          *
          * @param chancel
@@ -96,7 +114,9 @@ public class LoadInitConfig {
          * @return
          */
         public Builder diskCacheName(@NonNull String diskCacheName) {
-            this.diskCacheName = diskCacheName;
+            if (!TextUtils.isEmpty(diskCacheName)) {
+                this.diskCacheName = diskCacheName;
+            }
             return this;
         }
 
@@ -107,7 +127,9 @@ public class LoadInitConfig {
          * @return
          */
         public Builder diskCacheSize(@NonNull int diskCacheSize) {
-            this.diskCacheSize = diskCacheSize;
+            if (diskCacheSize > 0) {
+                this.diskCacheSize = diskCacheSize;
+            }
             return this;
         }
 
@@ -128,6 +150,17 @@ public class LoadInitConfig {
          */
         public Builder asInternalCacheDiskCache() {
             isExternalCacheDiskCache = false;
+            return this;
+        }
+
+        /**
+         * 默认全局加载配置
+         *
+         * @param defaultImageConfig
+         * @return
+         */
+        public Builder defaultImageConfig(ImageConfig defaultImageConfig) {
+            this.defaultImageConfig = defaultImageConfig;
             return this;
         }
 

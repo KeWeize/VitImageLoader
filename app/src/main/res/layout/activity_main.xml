@@ -7,16 +7,62 @@
     android:orientation="vertical"
     tools:context="com.meiquick.vitimageload.MainActivity">
 
-    <ImageView
-        android:id="@+id/image_bt"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="165dp"/>
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginTop="25dp"
-        android:layout_centerHorizontal="true"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/test01"
+                android:layout_width="200dp"
+                android:layout_height="120dp" />
+
+            <ImageView
+                android:id="@+id/test02"
+                android:layout_width="200dp"
+                android:layout_height="120dp" />
+
+            <ImageView
+                android:id="@+id/test03"
+                android:layout_width="200dp"
+                android:layout_height="120dp" />
+
+            <ImageView
+                android:id="@+id/test04"
+                android:layout_width="200dp"
+                android:layout_height="120dp" />
+
+            <ImageView
+                android:id="@+id/test05"
+                android:layout_width="200dp"
+                android:layout_height="120dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_cache_Size"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+
+                <Button
+                    android:id="@+id/btn_clear_cache"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clear cache"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

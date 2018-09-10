@@ -1,4 +1,4 @@
-package com.meiquick.imageload.config;
+package com.meiquick.imageload.contants;
 
 import android.support.annotation.IntDef;
 

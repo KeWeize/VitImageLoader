@@ -11,21 +11,18 @@ import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.MemoryCategory;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.EncodeStrategy;
 import com.bumptech.glide.load.Transformation;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.cache.ExternalCacheDiskCacheFactory;
 import com.bumptech.glide.load.engine.cache.ExternalPreferredCacheDiskCacheFactory;
 import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.request.RequestOptions;
-import com.meiquick.imageload.R;
 import com.meiquick.imageload.config.ImageConfig;
-import com.meiquick.imageload.config.CropMode;
+import com.meiquick.imageload.contants.CropMode;
 import com.meiquick.imageload.config.LoadInitConfig;
+
+import java.io.File;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
@@ -39,6 +36,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class GlideLoader implements ILoader {
 
     private static String TAG = GlideLoader.class.getSimpleName();
+    private static RequestOptions _DEFAULT_REQUEST_OPTIONS;
 
     @Override
     public void init(Context context, LoadInitConfig loadInitConfig) {
@@ -50,6 +48,11 @@ public class GlideLoader implements ILoader {
         } else {
             builder.setDiskCache(new InternalCacheDiskCacheFactory(context,
                     loadInitConfig.getDiskCacheName(), loadInitConfig.getDiskCacheSize()));
+        }
+        // 设置全局默认图片加载配置
+        ImageConfig defaultImageConfig = loadInitConfig.getDefaultImageConfig();
+        if (defaultImageConfig != null && defaultImageConfig.getContext() != null) {
+            _DEFAULT_REQUEST_OPTIONS = generateRequestOptions(defaultImageConfig);
         }
     }
 
@@ -77,6 +80,10 @@ public class GlideLoader implements ILoader {
             }
         }
 
+    }
+
+    @Override
+    public void clearAllCaches(Context context) {
     }
 
     /**
@@ -116,7 +123,7 @@ public class GlideLoader implements ILoader {
      * @return
      */
     private RequestOptions generateRequestOptions(ImageConfig config) {
-        RequestOptions requestOptions = new RequestOptions();
+        RequestOptions requestOptions = getDefaultRequestOptions().clone();
         // 设置加载占位符
         if (config.getPlaceholderId() > 0) {
             requestOptions.placeholder(config.getPlaceholderId());
@@ -154,6 +161,7 @@ public class GlideLoader implements ILoader {
             transformations[count] = new BlurTransformation(config.getBlur());
         }
         requestOptions.transforms(transformations);
+
         return requestOptions;
     }
 
@@ -169,6 +177,16 @@ public class GlideLoader implements ILoader {
             count++;
         }
         return count;
+    }
+
+    /**
+     * 获取默认请求选项
+     */
+    private static RequestOptions getDefaultRequestOptions() {
+        if (_DEFAULT_REQUEST_OPTIONS == null) {
+            _DEFAULT_REQUEST_OPTIONS = new RequestOptions();
+        }
+        return _DEFAULT_REQUEST_OPTIONS;
     }
 
 }

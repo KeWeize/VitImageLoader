@@ -7,6 +7,9 @@ import android.support.annotation.RawRes;
 import android.util.Log;
 import android.view.View;
 
+import com.meiquick.imageload.contants.CropMode;
+import com.meiquick.imageload.contants.ImageContants;
+
 import java.io.File;
 
 /**
@@ -275,7 +278,7 @@ public class ImageConfig {
                 return this;
             }
             if (!filePath.startsWith("file://")) {
-                filePath += "file://";
+                filePath = "file://" + filePath;
             }
             if (filePath.endsWith(ImageContants.CONTANTS_SUFFIX_GIF)) {
                 asGif = true;
@@ -333,8 +336,8 @@ public class ImageConfig {
          * @return
          */
         public Builder asserts(@NonNull String path) {
-            this.assertspath = path;
-            if (rawPath.endsWith(ImageContants.CONTANTS_SUFFIX_GIF)) {
+            this.assertspath = ImageContants.CONTANTS_PATH_ASSERTS + path;
+            if (assertspath.endsWith(ImageContants.CONTANTS_SUFFIX_GIF)) {
                 asGif = true;
             }
             return this;
@@ -426,10 +429,22 @@ public class ImageConfig {
             return this;
         }
 
+        /**
+         * 构建 ImageConfig 并加载图片到 targetView
+         *
+         * @param targetView
+         */
         public void into(@NonNull View targetView) {
             this.target = targetView;
             // 实例 ImageConfig， 开始调用 loader 加载图片
             new ImageConfig(this).show();
+        }
+
+        /**
+         * 只是构建 ImageConfig
+         */
+        public ImageConfig build() {
+            return new ImageConfig(this);
         }
 
     }

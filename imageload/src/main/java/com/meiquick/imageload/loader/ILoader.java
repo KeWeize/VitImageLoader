@@ -13,6 +13,12 @@ import com.meiquick.imageload.config.LoadInitConfig;
 
 public interface ILoader {
 
+    /**
+     * 初始化缓存目录、大小
+     *
+     * @param context
+     * @param loadInitConfig
+     */
     void init(Context context, LoadInitConfig loadInitConfig);
 
     /**
@@ -21,5 +27,10 @@ public interface ILoader {
      * @param config 加载配置
      */
     void request(ImageConfig config);
+
+    /**
+     * 清理所有的缓存
+     */
+    void clearAllCaches(Context context);
 
 }

@@ -2,33 +2,40 @@ package com.meiquick.vitimageload;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.meiquick.imageload.MImageLoader;
+import com.meiquick.imageload.config.GlobalConfig;
 import com.meiquick.imageload.config.ImageConfig;
+import com.meiquick.imageload.loader.GlideLoader;
 
 public class MainActivity extends AppCompatActivity {
+
+    TextView tvCacheSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MImageLoader.init(this, 10);
+        ImageView image01 = findViewById(R.id.test01);
+        ImageView image02 = findViewById(R.id.test02);
+        ImageView image03 = findViewById(R.id.test03);
+        ImageView image04 = findViewById(R.id.test04);
+        ImageView image05 = findViewById(R.id.test05);
 
-        ImageView image = findViewById(R.id.image);
+        MImageLoader.with(this).res(R.drawable.test01).into(image01);
 
-        new ImageConfig.Builder(this)
-//                .errorId(R.drawable.ic_error)
-                .asCircle()
-                .url("http://p0.ifengimg000.com/pmop/2018/0906/D13E8623F6CDAC87FFF305863723AEEF91512A90_size126_w1080_h720.jpeg").into(image);
+        MImageLoader.with(this).url("https://img.zcool.cn/community/" +
+                "0116dd5b95d522a8012017eeeb1632.jpg@260w_195h_1c_1e_1o_100sh.jpg").into(image02);
 
-        ImageView imageBg = findViewById(R.id.image_bt);
-        new ImageConfig.Builder(this)
-                .errorId(R.drawable.ic_error)
-                .centerCrop()
-                .blur(15)
-                .url("http://p0.ifengimg000.com/pmop/2018/0906/D13E8623F6CDAC87FFF305863723AEEF91512A90_size126_w1080_h720.jpeg").into(imageBg);
+        MImageLoader.with(this).asserts("test03.jpg").into(image03);
+
+        MImageLoader.with(this).raw(R.raw.test05).into(image05);
 
     }
 }
