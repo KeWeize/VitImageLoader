@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.meiquick.imageload.config.ImageConfig;
 import com.meiquick.imageload.contants.CropMode;
@@ -66,10 +67,13 @@ public class GlideLoader implements ILoader {
         }
         // 添加请求选项
         requestBuilder = requestBuilder.apply(generateRequestOptions(config));
+        // 是否使用交叉动画
+        if (config.isWithCrossFade()) {
+            requestBuilder.transition(DrawableTransitionOptions.withCrossFade());
+        }
         if (config.isAsBitmap()) {
             // 下载 bitmap 图片
         } else {
-
 
             if (config.isAsGif()) {
                 // 加载为 gif

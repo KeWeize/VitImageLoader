@@ -30,10 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
         MImageLoader.with(this).res(R.drawable.test01).into(image01);
 
-        MImageLoader.with(this).url("https://img.zcool.cn/community/" +
-                "0116dd5b95d522a8012017eeeb1632.jpg@260w_195h_1c_1e_1o_100sh.jpg").into(image02);
+        MImageLoader.with(this).url("http://pic1.win4000.com/wallpaper/2017-12-04/5a24c0e98479b.jpg")
+//                .withCrossFade()
+                .asCircle()
+//                .centerCrop()
+                .into(image02);
 
         MImageLoader.with(this).asserts("test03.jpg").into(image03);
+
+        MImageLoader.with(this).res(R.drawable.testgif).into(image04);
 
         MImageLoader.with(this).raw(R.raw.test05).into(image05);
 

@@ -87,6 +87,9 @@ public class ImageConfig {
      */
     private int blur;
 
+    /**############ 使用动画 ############*/
+    private boolean withCrossFade;
+
     private ImageConfig(Builder builder) {
         this.context = builder.context;
         this.url = builder.url;
@@ -104,6 +107,7 @@ public class ImageConfig {
         this.cropMode = builder.cropMode;
         this.radius = builder.radius;
         this.blur = builder.blur;
+        this.withCrossFade = builder.withCrossFade;
     }
 
     public Context getContext() {
@@ -168,6 +172,10 @@ public class ImageConfig {
 
     public int getBlur() {
         return blur;
+    }
+
+    public boolean isWithCrossFade() {
+        return withCrossFade;
     }
 
     private void show() {
@@ -246,6 +254,9 @@ public class ImageConfig {
          * 模糊
          */
         private int blur;
+
+        /**############ 使用动画 ############*/
+        private boolean withCrossFade = false;
 
         public Builder(@NonNull Context context) {
             this.context = context;
@@ -426,6 +437,11 @@ public class ImageConfig {
          */
         public Builder blur(int blur) {
             this.blur = blur;
+            return this;
+        }
+
+        public Builder withCrossFade() {
+            withCrossFade = true;
             return this;
         }
 
